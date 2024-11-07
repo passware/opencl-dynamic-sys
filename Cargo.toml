@@ -1,0 +1,14 @@
+[package]
+name = "opencl-dynamic-sys"
+version = "0.1.0"
+edition = "2021"
+authors = ["Dmitry Zakablukov <dmitriy.zakablukov@gmail.com>"]
+description = "Rust library to handle dynamic load of the OpenCL shared library"
+homepage = "https://github.com/passware/opencl-dynamic-sys-rs"
+repository = "https://github.com/passware/opencl-dynamic-sys-rs"
+readme = "README.md"
+keywords = ["opencl", "gpu", "gpgpu", "dlopen", "dynamic", "shared", "api"]
+license = "MIT"
+
+[dependencies]
+dlopen2 = "0.7.0"
