@@ -1,6 +1,6 @@
 #![allow(non_camel_case_types, non_upper_case_globals)]
 
-use libc::{c_void, intptr_t};
+pub use libc::{c_char, c_uchar, c_void, intptr_t, size_t};
 
 // cl_platform.h
 
@@ -89,3 +89,21 @@ pub type cl_device_device_enqueue_capabilities = cl_bitfield;
 pub type cl_khronos_vendor_id = cl_uint;
 pub type cl_mem_properties = cl_properties;
 pub type cl_version = cl_uint;
+
+pub struct cl_image_format {
+    pub image_channel_order: cl_channel_order,
+    pub image_channel_data_type: cl_channel_type,
+}
+
+pub struct cl_image_desc {
+    pub image_type: cl_mem_object_type,
+    pub image_width: size_t,
+    pub image_height: size_t,
+    pub image_depth: size_t,
+    pub image_array_size: size_t,
+    pub image_row_pitch: size_t,
+    pub image_slice_pitch: size_t,
+    pub num_mip_levels: cl_uint,
+    pub num_samples: cl_uint,
+    pub buffer: cl_mem,
+}
