@@ -876,4 +876,79 @@ pub struct OpenCl {
         event_wait_list: *const cl_event,
         event: *mut cl_event,
     ) -> cl_int,
+
+    // OpenGL Api
+    clCreateFromGLBuffer: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        bufobj: cl_GLuint,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clCreateFromGLTexture: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        target: cl_GLenum,
+        miplevel: cl_GLint,
+        texture: cl_GLuint,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clCreateFromGLRenderbuffer: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        renderbuffer: cl_GLuint,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clGetGLObjectInfo: fn(
+        memobj: cl_mem,
+        gl_object_type: *mut cl_gl_object_type,
+        gl_object_name: *mut cl_GLuint,
+    ) -> cl_int,
+
+    clGetGLTextureInfo: fn(
+        memobj: cl_mem,
+        param_name: cl_gl_texture_info,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clEnqueueAcquireGLObjects: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueReleaseGLObjects: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    // Deprecated OpenCL 1.1 APIs
+    clCreateFromGLTexture2D: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        texture_target: cl_GLenum,
+        miplevel: cl_GLint,
+        texture: cl_GLuint,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clCreateFromGLTexture3D: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        texture_target: cl_GLenum,
+        miplevel: cl_GLint,
+        texture: cl_GLuint,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
 }

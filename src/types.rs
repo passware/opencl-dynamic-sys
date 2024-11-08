@@ -90,6 +90,11 @@ pub type cl_khronos_vendor_id = cl_uint;
 pub type cl_mem_properties = cl_properties;
 pub type cl_version = cl_uint;
 
+pub type cl_gl_object_type = cl_uint;
+pub type cl_gl_texture_info = cl_uint;
+pub type cl_gl_platform_info = cl_uint;
+pub type cl_GLsync = *mut c_void;
+
 pub struct cl_image_format {
     pub image_channel_order: cl_channel_order,
     pub image_channel_data_type: cl_channel_type,
