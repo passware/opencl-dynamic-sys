@@ -42,6 +42,7 @@ name = "opencl-dynamic-sys"
 version = "0.1.0"
 dependencies = [
  "dlopen2",
+ "libc",
 ]
 
 [[package]]
