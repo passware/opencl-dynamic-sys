@@ -4,4 +4,4 @@ pub use errors::{Error, Result};
 mod types;
 
 mod container;
-pub use container::load_library;
+pub use container::{load_library, OpenClRuntime};

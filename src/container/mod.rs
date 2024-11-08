@@ -5,7 +5,7 @@ use dlopen2::wrapper::WrapperApi;
 use crate::types::*;
 
 mod utils;
-pub use utils::load_library;
+pub use utils::{load_library, OpenClRuntime};
 
 #[derive(WrapperApi)]
 pub struct OpenCl {

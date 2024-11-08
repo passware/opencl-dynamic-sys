@@ -4,10 +4,12 @@ use dlopen2::{wrapper::Container, Error};
 
 use super::OpenCl;
 
-static OPENCL_CONTAINER: OnceLock<Result<Container<OpenCl>, Error>> = OnceLock::new();
+pub type OpenClRuntime = Container<OpenCl>;
 
-pub fn load_library() -> &'static Result<Container<OpenCl>, Error> {
-    OPENCL_CONTAINER.get_or_init(|| {
+static OPENCL_RUNTIME: OnceLock<Result<OpenClRuntime, Error>> = OnceLock::new();
+
+pub fn load_library() -> &'static Result<OpenClRuntime, Error> {
+    OPENCL_RUNTIME.get_or_init(|| {
         if let Ok(env_var) = std::env::var("OPENCL_DYLIB_PATH") {
             for library_path in env_var.split(';') {
                 let library = unsafe { Container::load(library_path) };
