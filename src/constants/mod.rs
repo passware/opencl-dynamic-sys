@@ -91,6 +91,9 @@ pub const CL_INVALID_DEVICE_QUEUE: cl_int = -70;
 pub const CL_INVALID_SPEC_ID: cl_int = -71;
 pub const CL_MAX_SIZE_RESTRICTION_EXCEEDED: cl_int = -72;
 
+pub const CL_RUNTIME_LOAD_FAILED: cl_int = -2000;
+pub const CL_FUNCTION_NOT_AVAILABLE: cl_int = -2001;
+
 // cl_bool:
 pub const CL_FALSE: cl_bool = 0;
 pub const CL_TRUE: cl_bool = 1;
