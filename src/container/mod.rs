@@ -2,7 +2,7 @@
 
 use dlopen2::wrapper::WrapperApi;
 
-use crate::types::{cl_gl::*, cl_platform::*, *};
+use crate::types::{cl_dx9_media_sharing::*, cl_egl::*, cl_gl::*, cl_platform::*, *};
 
 mod utils;
 pub use utils::{load_library, OpenClRuntime};
@@ -877,7 +877,111 @@ pub struct OpenCl {
         event: *mut cl_event,
     ) -> cl_int,
 
-    // OpenGL Api
+    // Direct3D 10 APIs
+    clGetSupportedD3D10TextureFormatsINTEL: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        image_type: cl_mem_object_type,
+        num_entries: cl_uint,
+        d3d10_formats: *mut DXGI_FORMAT,
+        num_surface_formats: *mut cl_uint,
+    ) -> cl_int,
+
+    // Direct3D 11 APIs
+    clGetSupportedD3D11TextureFormatsINTEL: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        image_type: cl_mem_object_type,
+        plane: cl_uint,
+        num_entries: cl_uint,
+        d3d11_formats: *mut DXGI_FORMAT,
+        num_surface_formats: *mut cl_uint,
+    ) -> cl_int,
+
+    // DirectX9 Media Sharing APIs
+    clGetDeviceIDsFromDX9INTEL: fn(
+        platform: cl_platform_id,
+        dx9_device_source: cl_dx9_device_source_intel,
+        dx9_object: *mut c_void,
+        dx9_device_set: cl_dx9_device_set_intel,
+        num_entries: cl_uint,
+        devices: *mut cl_device_id,
+        num_devices: *mut cl_uint,
+    ) -> cl_int,
+
+    clCreateFromDX9MediaSurfaceINTEL: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        resource: IDirect3DSurface9_ptr,
+        sharedHandle: HANDLE,
+        plane: cl_uint,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clEnqueueAcquireDX9ObjectsINTEL: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueReleaseDX9ObjectsINTEL: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clGetSupportedDX9MediaSurfaceFormatsINTEL: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        image_type: cl_mem_object_type,
+        plane: cl_uint,
+        num_entries: cl_uint,
+        dx9_formats: *mut D3DFORMAT,
+        num_surface_formats: *mut cl_uint,
+    ) -> cl_int,
+
+    // EGL APIs
+    clCreateFromEGLImageKHR: fn(
+        context: cl_context,
+        display: CLeglDisplayKHR,
+        image: CLeglImageKHR,
+        flags: cl_mem_flags,
+        properties: *const cl_egl_image_properties_khr,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clEnqueueAcquireEGLObjectsKHR: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueReleaseEGLObjectsKHR: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clCreateEventFromEGLSyncKHR: fn(
+        context: cl_context,
+        sync: CLeglSyncKHR,
+        display: CLeglDisplayKHR,
+        errcode_ret: *mut cl_int,
+    ) -> cl_event,
+
+    // OpenGL APIs
     clCreateFromGLBuffer: fn(
         context: cl_context,
         flags: cl_mem_flags,
