@@ -2,7 +2,7 @@
 
 use dlopen2::wrapper::WrapperApi;
 
-use crate::types::{cl_platform::*, *};
+use crate::types::{cl_gl::*, cl_platform::*, *};
 
 mod utils;
 pub use utils::{load_library, OpenClRuntime};

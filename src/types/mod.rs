@@ -1,12 +1,17 @@
 #![allow(non_camel_case_types, non_upper_case_globals)]
 
-pub use libc::{c_char, c_uchar, c_void, intptr_t, size_t};
+pub use libc::{c_char, c_int, c_uchar, c_void, intptr_t, size_t};
 
+use crate::constants::CL_NAME_VERSION_MAX_NAME_SIZE;
+
+pub mod cl_d3d10;
 pub mod cl_d3d11;
 pub mod cl_dx9_media_sharing;
 pub mod cl_egl;
 pub mod cl_ext;
+pub mod cl_function_types;
 pub mod cl_gl;
+pub mod cl_icd;
 pub mod cl_layer;
 
 pub mod cl_platform;
@@ -80,16 +85,15 @@ pub type cl_khronos_vendor_id = cl_uint;
 pub type cl_mem_properties = cl_properties;
 pub type cl_version = cl_uint;
 
-pub type cl_gl_object_type = cl_uint;
-pub type cl_gl_texture_info = cl_uint;
-pub type cl_gl_platform_info = cl_uint;
-pub type cl_GLsync = *mut c_void;
-
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct cl_image_format {
     pub image_channel_order: cl_channel_order,
     pub image_channel_data_type: cl_channel_type,
 }
 
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct cl_image_desc {
     pub image_type: cl_mem_object_type,
     pub image_width: size_t,
@@ -101,4 +105,18 @@ pub struct cl_image_desc {
     pub num_mip_levels: cl_uint,
     pub num_samples: cl_uint,
     pub buffer: cl_mem,
+}
+
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct cl_buffer_region {
+    pub origin: size_t,
+    pub size: size_t,
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct cl_name_version {
+    pub version: cl_version,
+    pub name: [cl_uchar; CL_NAME_VERSION_MAX_NAME_SIZE],
 }
