@@ -2,7 +2,10 @@
 
 use dlopen2::wrapper::WrapperApi;
 
-use crate::types::{cl_dx9_media_sharing::*, cl_egl::*, cl_gl::*, cl_platform::*, *};
+use crate::types::{
+    cl_dx9_media_sharing::*, cl_egl::*, cl_ext::*, cl_gl::*, cl_icd::*, cl_layer::*,
+    cl_platform::*, *,
+};
 
 mod utils;
 pub use utils::{load_library, OpenClRuntime};
@@ -981,6 +984,657 @@ pub struct OpenCl {
         errcode_ret: *mut cl_int,
     ) -> cl_event,
 
+    // Extensions APIs
+    clCreateCommandBufferKHR: fn(
+        num_queues: cl_uint,
+        queues: *const cl_command_queue,
+        properties: *const cl_command_buffer_properties_khr,
+        errcode_ret: *mut cl_int,
+    ) -> cl_command_buffer_khr,
+
+    clFinalizeCommandBufferKHR: fn(command_buffer: cl_command_buffer_khr) -> cl_int,
+
+    clRetainCommandBufferKHR: fn(command_buffer: cl_command_buffer_khr) -> cl_int,
+
+    clReleaseCommandBufferKHR: fn(command_buffer: cl_command_buffer_khr) -> cl_int,
+
+    clEnqueueCommandBufferKHR: fn(
+        num_queues: cl_uint,
+        queues: *mut cl_command_queue,
+        command_buffer: cl_command_buffer_khr,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clCommandBarrierWithWaitListKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandCopyBufferKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        src_buffer: cl_mem,
+        dst_buffer: cl_mem,
+        src_offset: size_t,
+        dst_offset: size_t,
+        size: size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandCopyBufferRectKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        src_buffer: cl_mem,
+        dst_buffer: cl_mem,
+        src_origin: *const size_t,
+        dst_origin: *const size_t,
+        region: *const size_t,
+        src_row_pitch: size_t,
+        src_slice_pitch: size_t,
+        dst_row_pitch: size_t,
+        dst_slice_pitch: size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandCopyBufferToImageKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        src_buffer: cl_mem,
+        dst_image: cl_mem,
+        src_offset: size_t,
+        dst_origin: *const size_t,
+        region: *const size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandCopyImageKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        src_image: cl_mem,
+        dst_image: cl_mem,
+        src_origin: *const size_t,
+        dst_origin: *const size_t,
+        region: *const size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandCopyImageToBufferKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        src_image: cl_mem,
+        dst_buffer: cl_mem,
+        src_origin: *const size_t,
+        region: *const size_t,
+        dst_offset: size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandFillBufferKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        buffer: cl_mem,
+        pattern: *const c_void,
+        pattern_size: size_t,
+        offset: size_t,
+        size: size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandFillImageKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        image: cl_mem,
+        fill_color: *const c_void,
+        origin: *const size_t,
+        region: *const size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandNDRangeKernelKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        properties: *const cl_ndrange_kernel_command_properties_khr,
+        kernel: cl_kernel,
+        work_dim: cl_uint,
+        global_work_offset: *const size_t,
+        global_work_size: *const size_t,
+        local_work_size: *const size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandSVMMemcpyKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        dst_ptr: *mut c_void,
+        src_ptr: *const c_void,
+        size: size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clCommandSVMMemFillKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        command_queue: cl_command_queue,
+        svm_ptr: *mut c_void,
+        pattern: *const c_void,
+        pattern_size: size_t,
+        size: size_t,
+        num_sync_points_in_wait_list: cl_uint,
+        sync_point_wait_list: *const cl_sync_point_khr,
+        sync_point: *mut cl_sync_point_khr,
+        mutable_handle: *mut cl_mutable_command_khr,
+    ) -> cl_int,
+
+    clGetCommandBufferInfoKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        param_name: cl_command_buffer_info_khr,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clRemapCommandBufferKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        automatic: cl_bool,
+        num_queues: cl_uint,
+        queues: *const cl_command_queue,
+        num_handles: cl_uint,
+        handles: *const cl_mutable_command_khr,
+        handles_ret: *mut cl_mutable_command_khr,
+        errcode_ret: *mut cl_int,
+    ) -> cl_command_buffer_khr,
+
+    clUpdateMutableCommandsKHR: fn(
+        command_buffer: cl_command_buffer_khr,
+        mutable_config: *const cl_mutable_base_config_khr,
+    ) -> cl_int,
+
+    clGetMutableCommandInfoKHR: fn(
+        command: cl_mutable_command_khr,
+        param_name: cl_mutable_command_info_khr,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clSetMemObjectDestructorAPPLE: fn(
+        memobj: cl_mem,
+        pfn_notify: Option<unsafe extern "C" fn(memobj: cl_mem, user_data: *mut c_void)>,
+        user_data: *mut c_void,
+    ) -> cl_int,
+
+    clLogMessagesToSystemLogAPPLE:
+        fn(errstr: *const c_char, private_info: *const c_void, cb: size_t, user_data: *mut c_void),
+
+    clLogMessagesToStdoutAPPLE:
+        fn(errstr: *const c_char, private_info: *const c_void, cb: size_t, user_data: *mut c_void),
+
+    clLogMessagesToStderrAPPLE:
+        fn(errstr: *const c_char, private_info: *const c_void, cb: size_t, user_data: *mut c_void),
+
+    clIcdGetPlatformIDsKHR: fn(
+        num_entries: cl_uint,
+        platforms: *mut cl_platform_id,
+        num_platforms: *mut cl_uint,
+    ) -> cl_int,
+
+    clCreateProgramWithILKHR: fn(
+        context: cl_context,
+        il: *const c_void,
+        length: size_t,
+        errcode_ret: *mut cl_int,
+    ) -> cl_program,
+
+    clTerminateContextKHR: fn(context: cl_context) -> cl_int,
+
+    clCreateCommandQueueWithPropertiesKHR: fn(
+        context: cl_context,
+        device: cl_device_id,
+        properties: *const cl_queue_properties_khr,
+        errcode_ret: *mut cl_int,
+    ) -> cl_command_queue,
+
+    clReleaseDeviceEXT: fn(device: cl_device_id) -> cl_int,
+
+    clRetainDeviceEXT: fn(device: cl_device_id) -> cl_int,
+
+    clCreateSubDevicesEXT: fn(
+        in_device: cl_device_id,
+        properties: *const cl_device_partition_property_ext,
+        num_entries: cl_uint,
+        out_devices: *mut cl_device_id,
+        num_devices: *mut cl_uint,
+    ) -> cl_int,
+
+    clEnqueueMigrateMemObjectEXT: fn(
+        command_queue: cl_command_queue,
+        num_mem_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        flags: cl_mem_migration_flags_ext,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clGetDeviceImageInfoQCOM: fn(
+        device: cl_device_id,
+        image_width: size_t,
+        image_height: size_t,
+        image_format: *const cl_image_format,
+        param_name: cl_image_pitch_info_qcom,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clEnqueueAcquireGrallocObjectsIMG: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueReleaseGrallocObjectsIMG: fn(
+        command_queue: cl_command_queue,
+        num_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueGenerateMipmapIMG: fn(
+        command_queue: cl_command_queue,
+        src_image: cl_mem,
+        dst_image: cl_mem,
+        mipmap_filter_mode: cl_mipmap_filter_mode_img,
+        array_region: *const size_t,
+        mip_region: *const size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clGetKernelSubGroupInfoKHR: fn(
+        in_kernel: cl_kernel,
+        in_device: cl_device_id,
+        param_name: cl_kernel_sub_group_info,
+        input_value_size: size_t,
+        input_value: *const c_void,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clGetKernelSuggestedLocalWorkSizeKHR: fn(
+        command_queue: cl_command_queue,
+        kernel: cl_kernel,
+        work_dim: cl_uint,
+        global_work_offset: *const size_t,
+        global_work_size: *const size_t,
+        suggested_local_work_size: *mut size_t,
+    ) -> cl_int,
+
+    clEnqueueAcquireExternalMemObjectsKHR: fn(
+        command_queue: cl_command_queue,
+        num_mem_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueReleaseExternalMemObjectsKHR: fn(
+        command_queue: cl_command_queue,
+        num_mem_objects: cl_uint,
+        mem_objects: *const cl_mem,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clGetSemaphoreHandleForTypeKHR: fn(
+        sema_object: cl_semaphore_khr,
+        device: cl_device_id,
+        handle_type: cl_external_semaphore_handle_type_khr,
+        handle_size: size_t,
+        handle_ptr: *mut c_void,
+        handle_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clReImportSemaphoreSyncFdKHR: fn(
+        sema_object: cl_semaphore_khr,
+        reimport_props: *mut cl_semaphore_reimport_properties_khr,
+        fd: c_int,
+    ) -> cl_int,
+
+    clCreateSemaphoreWithPropertiesKHR: fn(
+        context: cl_context,
+        sema_props: *const cl_semaphore_properties_khr,
+        errcode_ret: *mut cl_int,
+    ) -> cl_semaphore_khr,
+
+    clEnqueueWaitSemaphoresKHR: fn(
+        command_queue: cl_command_queue,
+        num_sema_objects: cl_uint,
+        sema_objects: *const cl_semaphore_khr,
+        sema_payload_list: *const cl_semaphore_payload_khr,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueSignalSemaphoresKHR: fn(
+        command_queue: cl_command_queue,
+        num_sema_objects: cl_uint,
+        sema_objects: *const cl_semaphore_khr,
+        sema_payload_list: *const cl_semaphore_payload_khr,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clGetSemaphoreInfoKHR: fn(
+        sema_object: cl_semaphore_khr,
+        param_name: cl_semaphore_info_khr,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clReleaseSemaphoreKHR: fn(sema_object: cl_semaphore_khr) -> cl_int,
+
+    clRetainSemaphoreKHR: fn(sema_object: cl_semaphore_khr) -> cl_int,
+
+    clImportMemoryARM: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        properties: *const cl_import_properties_arm,
+        memory: *mut c_void,
+        size: size_t,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clSVMAllocARM: fn(
+        context: cl_context,
+        flags: cl_svm_mem_flags_arm,
+        size: size_t,
+        alignment: cl_uint,
+    ) -> *mut c_void,
+
+    clSVMFreeARM: fn(context: cl_context, svm_pointer: *mut c_void),
+
+    clEnqueueSVMFreeARM: fn(
+        command_queue: cl_command_queue,
+        num_svm_pointers: cl_uint,
+        svm_pointers: *mut *mut c_void,
+        pfn_free_func: Option<
+            unsafe extern "C" fn(
+                queue: cl_command_queue,
+                num_svm_pointers: cl_uint,
+                svm_pointers: *mut *mut c_void,
+                user_data: *mut c_void,
+            ),
+        >,
+        user_data: *mut c_void,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueSVMMemcpyARM: fn(
+        command_queue: cl_command_queue,
+        blocking_copy: cl_bool,
+        dst_ptr: *mut c_void,
+        src_ptr: *const c_void,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueSVMMemFillARM: fn(
+        command_queue: cl_command_queue,
+        svm_ptr: *mut c_void,
+        pattern: *const c_void,
+        pattern_size: size_t,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueSVMMapARM: fn(
+        command_queue: cl_command_queue,
+        blocking_map: cl_bool,
+        flags: cl_map_flags,
+        svm_ptr: *mut c_void,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueSVMUnmapARM: fn(
+        command_queue: cl_command_queue,
+        svm_ptr: *mut c_void,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clSetKernelArgSVMPointerARM:
+        fn(kernel: cl_kernel, arg_index: cl_uint, arg_value: *const c_void) -> cl_int,
+
+    clSetKernelExecInfoARM: fn(
+        kernel: cl_kernel,
+        param_name: cl_kernel_exec_info_arm,
+        param_value_size: size_t,
+        param_value: *const c_void,
+    ) -> cl_int,
+
+    clCreateAcceleratorINTEL: fn(
+        context: cl_context,
+        accelerator_type: cl_accelerator_type_intel,
+        descriptor_size: size_t,
+        descriptor: *const c_void,
+        errcode_ret: *mut cl_int,
+    ) -> cl_accelerator_intel,
+
+    clGetAcceleratorInfoINTEL: fn(
+        accelerator: cl_accelerator_intel,
+        param_name: cl_accelerator_info_intel,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clRetainAcceleratorINTEL: fn(accelerator: cl_accelerator_intel) -> cl_int,
+
+    clReleaseAcceleratorINTEL: fn(accelerator: cl_accelerator_intel) -> cl_int,
+
+    clHostMemAllocINTEL: fn(
+        context: cl_context,
+        properties: *const cl_mem_properties_intel,
+        size: size_t,
+        alignment: cl_uint,
+        errcode_ret: *mut cl_int,
+    ) -> *mut c_void,
+
+    clDeviceMemAllocINTEL: fn(
+        context: cl_context,
+        device: cl_device_id,
+        properties: *const cl_mem_properties_intel,
+        size: size_t,
+        alignment: cl_uint,
+        errcode_ret: *mut cl_int,
+    ) -> *mut c_void,
+
+    clSharedMemAllocINTEL: fn(
+        context: cl_context,
+        device: cl_device_id,
+        properties: *const cl_mem_properties_intel,
+        size: size_t,
+        alignment: cl_uint,
+        errcode_ret: *mut cl_int,
+    ) -> *mut c_void,
+
+    clMemFreeINTEL: fn(context: cl_context, ptr: *mut c_void) -> cl_int,
+
+    clMemBlockingFreeINTEL: fn(context: cl_context, ptr: *mut c_void) -> cl_int,
+
+    clGetMemAllocInfoINTEL: fn(
+        context: cl_context,
+        ptr: *const c_void,
+        param_name: cl_mem_info_intel,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clSetKernelArgMemPointerINTEL:
+        fn(kernel: cl_kernel, arg_index: cl_uint, arg_value: *const c_void) -> cl_int,
+
+    clEnqueueMemFillINTEL: fn(
+        command_queue: cl_command_queue,
+        dst_ptr: *mut c_void,
+        pattern: *const c_void,
+        pattern_size: size_t,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueMemcpyINTEL: fn(
+        command_queue: cl_command_queue,
+        blocking: cl_bool,
+        dst_ptr: *mut c_void,
+        src_ptr: *const c_void,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueMemAdviseINTEL: fn(
+        command_queue: cl_command_queue,
+        ptr: *const c_void,
+        size: size_t,
+        advice: cl_mem_advice_intel,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueMigrateMemINTEL: fn(
+        command_queue: cl_command_queue,
+        ptr: *const c_void,
+        size: size_t,
+        flags: cl_mem_migration_flags,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueMemsetINTEL: fn(
+        command_queue: cl_command_queue,
+        dst_ptr: *mut c_void,
+        value: cl_int,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clCreateBufferWithPropertiesINTEL: fn(
+        context: cl_context,
+        properties: *const cl_mem_properties_intel,
+        flags: cl_mem_flags,
+        size: size_t,
+        host_ptr: *mut c_void,
+        errcode_ret: *mut cl_int,
+    ) -> cl_mem,
+
+    clEnqueueReadHostPipeINTEL: fn(
+        queue: cl_command_queue,
+        program: cl_program,
+        pipe_symbol: *const c_char,
+        blocking_read: cl_bool,
+        ptr: *mut c_void,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clEnqueueWriteHostPipeINTEL: fn(
+        queue: cl_command_queue,
+        program: cl_program,
+        pipe_symbol: *const c_char,
+        blocking_write: cl_bool,
+        ptr: *const c_void,
+        size: size_t,
+        num_events_in_wait_list: cl_uint,
+        event_wait_list: *const cl_event,
+        event: *mut cl_event,
+    ) -> cl_int,
+
+    clGetImageRequirementsInfoEXT: fn(
+        context: cl_context,
+        properties: *const cl_mem_properties,
+        flags: cl_mem_flags,
+        image_format: *const cl_image_format,
+        image_desc: *const cl_image_desc,
+        param_name: cl_image_requirements_info_ext,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clGetICDLoaderInfoOCLICD: fn(
+        param_name: cl_icdl_info,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clSetContentSizeBufferPoCL: fn(buffer: cl_mem, content_size_buffer: cl_mem) -> cl_int,
+
     // OpenGL APIs
     clCreateFromGLBuffer: fn(
         context: cl_context,
@@ -1055,4 +1709,39 @@ pub struct OpenCl {
         texture: cl_GLuint,
         errcode_ret: *mut cl_int,
     ) -> cl_mem,
+
+    clGetGLContextInfoKHR: fn(
+        properties: *const cl_context_properties,
+        param_name: cl_gl_context_info,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clCreateEventFromGLsyncKHR:
+        fn(context: cl_context, sync: cl_GLsync, errcode_ret: *mut cl_int) -> cl_event,
+
+    clGetSupportedGLTextureFormatsINTEL: fn(
+        context: cl_context,
+        flags: cl_mem_flags,
+        image_type: cl_mem_object_type,
+        num_entries: cl_uint,
+        gl_formats: *mut cl_GLenum,
+        num_texture_formats: *mut cl_uint,
+    ) -> cl_int,
+
+    // Layer APIs
+    clGetLayerInfo: fn(
+        param_name: cl_layer_info,
+        param_value_size: size_t,
+        param_value: *mut c_void,
+        param_value_size_ret: *mut size_t,
+    ) -> cl_int,
+
+    clInitLayer: fn(
+        num_entries: cl_uint,
+        target_dispatch: *const cl_icd_dispatch,
+        num_entries_ret: *mut cl_uint,
+        layer_dispatch_ret: *mut *const cl_icd_dispatch,
+    ) -> cl_int,
 }
