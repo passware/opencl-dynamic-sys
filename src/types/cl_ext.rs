@@ -1,4 +1,8 @@
-use crate::types::{c_void, cl_bitfield, cl_properties, cl_uint, cl_ulong, intptr_t};
+use crate::types::{
+    c_void, cl_bitfield,
+    cl_platform::{cl_uint, cl_ulong},
+    cl_properties, intptr_t,
+};
 
 // cl_khr_command_buffer
 pub type cl_platform_command_buffer_capabilities_khr = cl_bitfield;

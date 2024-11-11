@@ -1,4 +1,4 @@
-use crate::types::{cl_command_type, cl_int};
+use crate::types::{cl_command_type, cl_platform::cl_int};
 
 // Command type for events created with clEnqueueAcquireEGLObjectsKHR
 pub const CL_COMMAND_EGL_FENCE_SYNC_OBJECT_KHR: cl_command_type = 0x202F;

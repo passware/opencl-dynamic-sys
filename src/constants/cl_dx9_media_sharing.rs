@@ -1,7 +1,8 @@
 use crate::types::{
     cl_command_type, cl_context_info,
     cl_dx9_media_sharing::{cl_dx9_media_adapter_set_khr, cl_dx9_media_adapter_type_khr},
-    cl_image_info, cl_int, cl_mem_info,
+    cl_image_info, cl_mem_info,
+    cl_platform::cl_int,
 };
 
 pub const CL_INVALID_DX9_MEDIA_ADAPTER_KHR: cl_int = -1010;

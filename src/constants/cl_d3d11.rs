@@ -1,7 +1,8 @@
 use crate::types::{
     cl_command_type, cl_context_info,
     cl_d3d11::{cl_d3d11_device_set_khr, cl_d3d11_device_source_khr},
-    cl_image_info, cl_int, cl_mem_info,
+    cl_image_info, cl_mem_info,
+    cl_platform::cl_int,
 };
 
 pub const CL_INVALID_D3D11_DEVICE_KHR: cl_int = -1006;

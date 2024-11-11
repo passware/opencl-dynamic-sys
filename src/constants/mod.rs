@@ -7,11 +7,11 @@ use crate::types::{
     cl_device_atomic_capabilities, cl_device_device_enqueue_capabilities,
     cl_device_exec_capabilities, cl_device_fp_config, cl_device_info, cl_device_local_mem_type,
     cl_device_mem_cache_type, cl_device_partition_property, cl_device_svm_capabilities,
-    cl_device_type, cl_event_info, cl_filter_mode, cl_image_info, cl_int,
-    cl_kernel_arg_access_qualifier, cl_kernel_arg_address_qualifier, cl_kernel_arg_info,
-    cl_kernel_arg_type_qualifier, cl_kernel_exec_info, cl_kernel_info, cl_kernel_sub_group_info,
-    cl_kernel_work_group_info, cl_khronos_vendor_id, cl_map_flags, cl_mem_flags, cl_mem_info,
-    cl_mem_object_type, cl_pipe_info, cl_platform_info, cl_profiling_info, cl_program_binary_type,
+    cl_device_type, cl_event_info, cl_filter_mode, cl_image_info, cl_kernel_arg_access_qualifier,
+    cl_kernel_arg_address_qualifier, cl_kernel_arg_info, cl_kernel_arg_type_qualifier,
+    cl_kernel_exec_info, cl_kernel_info, cl_kernel_sub_group_info, cl_kernel_work_group_info,
+    cl_khronos_vendor_id, cl_map_flags, cl_mem_flags, cl_mem_info, cl_mem_object_type,
+    cl_pipe_info, cl_platform::cl_int, cl_platform_info, cl_profiling_info, cl_program_binary_type,
     cl_program_build_info, cl_program_info, cl_sampler_info, cl_svm_mem_flags, cl_version,
 };
 
@@ -19,6 +19,8 @@ pub mod cl_d3d11;
 pub mod cl_dx9_media_sharing;
 pub mod cl_egl;
 pub mod cl_ext;
+pub mod cl_gl;
+pub mod cl_layer;
 
 pub const CL_NAME_VERSION_MAX_NAME_SIZE: usize = 64;
 

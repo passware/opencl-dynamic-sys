@@ -25,9 +25,10 @@ use crate::types::{
         cl_semaphore_type_khr, cl_svm_mem_flags_arm, cl_unified_shared_memory_type_intel,
         cl_version_khr,
     },
-    cl_int, cl_kernel_exec_info, cl_kernel_info, cl_kernel_sub_group_info, cl_mem_flags,
-    cl_mem_info, cl_platform_info, cl_program_info, cl_properties, cl_queue_properties,
-    cl_sampler_properties, cl_uint, cl_ulong, size_t,
+    cl_kernel_exec_info, cl_kernel_info, cl_kernel_sub_group_info, cl_mem_flags, cl_mem_info,
+    cl_platform::{cl_int, cl_uint, cl_ulong},
+    cl_platform_info, cl_program_info, cl_properties, cl_queue_properties, cl_sampler_properties,
+    size_t,
 };
 
 // cl_device_info
