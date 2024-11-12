@@ -24,7 +24,7 @@
 //! You do *not* need to install any OpenCL hardware driver(s) to run your code which depends on `opencl-dynamic-sys` library.
 //!
 //! Just include the library in the `dependencies` section in your `Cargo.toml` file:
-//! ```
+//! ```custom
 //! [dependencies]
 //! opencl-dynamic-sys = "0.1"
 //! ```
@@ -39,7 +39,7 @@
 //!
 //! If you have the OpenCL shared library in non-standard place, you can use an environment variable `OPENCL_DYLIB_PATH`
 //! to define where to look for the library (the value of the variable is a comma-separated string):
-//! ```
+//! ```custom
 //! OPENCL_DYLIB_PATH=/usr/lib/libOpenCL.so;/var/lib/OpenCL;%DESKTOP%/OpenCL.dll
 //! ```
 //!
