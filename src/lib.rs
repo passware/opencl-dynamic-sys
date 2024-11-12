@@ -5,4 +5,4 @@ pub mod constants;
 pub mod types;
 
 mod container;
-pub use container::{load_library, OpenClRuntime};
+pub use container::{is_opencl_runtime_available, load_library, OpenClRuntime};

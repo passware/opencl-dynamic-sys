@@ -8,7 +8,7 @@ use crate::types::{
 };
 
 mod utils;
-pub use utils::{load_library, OpenClRuntime};
+pub use utils::{is_opencl_runtime_available, load_library, OpenClRuntime};
 
 #[derive(WrapperApi)]
 pub struct OpenCl {

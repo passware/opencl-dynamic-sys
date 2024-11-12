@@ -30,3 +30,7 @@ pub fn load_library() -> &'static Result<OpenClRuntime, Error> {
         unsafe { Container::load(LIBRARY_NAME) }
     })
 }
+
+pub fn is_opencl_runtime_available() -> bool {
+    load_library().is_ok()
+}
