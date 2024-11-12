@@ -10,6 +10,8 @@ use crate::types::{
 mod utils;
 pub use utils::{is_opencl_runtime_available, load_library, OpenClRuntime};
 
+/// Wrapper for the OpenCL API functions. These functions are marked as optional to avoid library load failure
+/// if a function is not present in the library.
 #[derive(WrapperApi)]
 pub struct OpenCl {
     // Platform API

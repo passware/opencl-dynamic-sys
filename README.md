@@ -21,7 +21,7 @@ it is v3.0 API function), the error code `CL_FUNCTION_NOT_AVAILABLE = -2001` wil
 
 ## Usage
 
-You do *not* need to install any OpenCL hardware driver(s) to run your code which depends on `opencl-dynamic-sys-rs` library.
+You do *not* need to install any OpenCL hardware driver(s) to run your code which depends on `opencl-dynamic-sys` library.
 
 Just include the library in the `dependencies` section in your `Cargo.toml` file:
 ```

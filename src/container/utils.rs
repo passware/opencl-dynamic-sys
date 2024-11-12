@@ -4,10 +4,13 @@ use dlopen2::{wrapper::Container, Error};
 
 use super::OpenCl;
 
+/// `dlopen2` container with all loaded API functions.
 pub type OpenClRuntime = Container<OpenCl>;
 
 static OPENCL_RUNTIME: OnceLock<Result<OpenClRuntime, Error>> = OnceLock::new();
 
+/// Utility function to load the OpenCL shared library (actual load will be performed only once).
+/// Returns an error if the library is not found.
 pub fn load_library() -> &'static Result<OpenClRuntime, Error> {
     OPENCL_RUNTIME.get_or_init(|| {
         if let Ok(env_var) = std::env::var("OPENCL_DYLIB_PATH") {
@@ -31,6 +34,7 @@ pub fn load_library() -> &'static Result<OpenClRuntime, Error> {
     })
 }
 
+/// Utility function to check if the OpenCL shared library is loaded successfully.
 pub fn is_opencl_runtime_available() -> bool {
     load_library().is_ok()
 }
