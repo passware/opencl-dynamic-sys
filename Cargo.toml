@@ -1,6 +1,6 @@
 [package]
 name = "opencl-dynamic-sys"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Dmitry Zakablukov <dmitriy.zakablukov@gmail.com>"]
 description = "Rust library to handle the dynamic load of the OpenCL shared library"

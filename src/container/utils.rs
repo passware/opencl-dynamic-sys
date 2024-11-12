@@ -22,9 +22,9 @@ pub fn load_library() -> &'static Result<OpenClRuntime, Error> {
             }
         }
 
-        const LIBRARY_NAME: &'static str = if cfg!(windows) {
+        const LIBRARY_NAME: &'static str = if cfg!(target_os = "windows") {
             "OpenCL.dll"
-        } else if cfg!(darwin) {
+        } else if cfg!(target_os = "macos") {
             "/System/Library/Frameworks/OpenCL.framework/OpenCL"
         } else {
             "libOpenCL.so"
