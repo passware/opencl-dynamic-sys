@@ -7,7 +7,7 @@ description = "Rust library to handle the dynamic load of the OpenCL shared libr
 homepage = "https://github.com/passware/opencl-dynamic-sys-rs"
 repository = "https://github.com/passware/opencl-dynamic-sys-rs"
 readme = "README.md"
-keywords = ["opencl", "gpu", "gpgpu", "dlopen", "dynamic", "shared", "api"]
+keywords = ["opencl", "gpgpu", "dlopen", "shared", "api"]
 license = "MIT"
 
 [dependencies]
